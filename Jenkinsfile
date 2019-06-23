@@ -10,6 +10,21 @@ pipeline {
                  customWorkspace '/home/jenkins/customworkspace'
              }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2', daysToKeepStr: '2', artifactDaysToKeepStr: '2'))
+        checkoutToSubdirectory('customworkspace1')
+        disableConcurrentBuilds()
+        disableResume()
+        overrideIndexTriggers(true)
+        preserveStashes(buildCount: 2)
+        quietPeriod(5)
+        retry(2)
+        skipDefaultCheckout()
+        skipStagesAfterUnstable()
+        timeout(time: 3, unit: 'MINUTES')
+        timestamps ()
+        parallelsAlwaysFailFast(true)
+    }
     stages  {
         stage('Build')  {
             steps  {
