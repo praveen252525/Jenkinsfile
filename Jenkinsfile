@@ -23,7 +23,7 @@ pipeline {
         skipStagesAfterUnstable()
         timeout(time: 3, unit: 'MINUTES')
         timestamps ()
-        parallelsAlwaysFailFast(true)
+        parallelsAlwaysFailFast()
     }
     stages  {
         stage('Build')  {
