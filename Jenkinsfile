@@ -7,7 +7,7 @@ pipeline {
     agent {
              node {
                  label 'DevOps-Cloud-Node2'
-                 customWorkspace '/home/jenkins/customworkspace'
+                 /* customWorkspace '/home/jenkins/customworkspace' */
              }
     }
     options {
