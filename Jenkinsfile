@@ -41,4 +41,5 @@ pipeline {
         cleanup  {
                 echo 'after every other post condition has been evaluated, regardless of the Pipeline or stage’s status'
         }
+    }
 }
