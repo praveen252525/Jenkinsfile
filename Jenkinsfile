@@ -10,6 +10,14 @@ pipeline {
                  customWorkspace '/home/jenkins/customworkspace'
              }
     }
+    stages  {
+        stage('Build')  {
+            steps  {
+                sh  'mvn --version'
+                sh  'java --version'
+             }
+         }
+    }
     post  {
         always  {
             echo 'this  can run always'
