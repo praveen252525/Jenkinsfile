@@ -12,14 +12,14 @@ pipeline {
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2', daysToKeepStr: '2', artifactDaysToKeepStr: '2'))
-        checkoutToSubdirectory('/workspace/customworkspace1')
+        checkoutToSubdirectory('customworkspace')
         disableConcurrentBuilds()
         disableResume()
         overrideIndexTriggers(true)
         preserveStashes(buildCount: 2)
         quietPeriod(5)
         retry(2)
-        skipDefaultCheckout()
+        skipDefaultCheckout(true)
         skipStagesAfterUnstable()
         timeout(time: 3, unit: 'MINUTES')
         timestamps ()
