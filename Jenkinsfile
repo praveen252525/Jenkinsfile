@@ -7,12 +7,12 @@ pipeline {
     agent {
              node {
                  label 'DevOps-Cloud-Node2'
-                 customWorkspace '/home/jenkins/customworkspace'
+                 /* customWorkspace '/home/jenkins/customworkspace' */
              }
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2', daysToKeepStr: '2', artifactDaysToKeepStr: '2'))
-        /* checkoutToSubdirectory('customworkspace')  */
+        checkoutToSubdirectory('customworkspace')  
         disableConcurrentBuilds()
         disableResume()
         overrideIndexTriggers(true)
