@@ -12,7 +12,7 @@ pipeline {
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2', daysToKeepStr: '2', artifactDaysToKeepStr: '2'))
-        checkoutToSubdirectory('customworkspace')  
+        checkoutToSubdirectory('customworkspace')
         disableConcurrentBuilds()
         disableResume()
         overrideIndexTriggers(true)
@@ -25,13 +25,33 @@ pipeline {
         timestamps ()
         parallelsAlwaysFailFast()
     }
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+
+        text(name: 'Jenkins', defaultValue: 'Jenkins', description: 'Enter some information about the person')
+
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+
+        file(name: "FILE", description: "Choose a file to upload")
+    }
     stages  {
-        stage('Build')  {
-            steps  {
-                sh  'mvn --version'
-                sh  'java -version'
-             }
-         }
+        stage('Parameters Section') {
+            steps {
+                echo "Hello ${params.PERSON}"
+
+                echo "Biography: ${params.BIOGRAPHY}"
+
+                echo "Toggle: ${params.TOGGLE}"
+
+                echo "Choice: ${params.CHOICE}"
+
+                echo "Password: ${params.PASSWORD}"
+            }
+        }
     }
     post  {
         always  {
