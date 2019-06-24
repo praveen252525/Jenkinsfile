@@ -9,8 +9,7 @@ pipeline {
                  label 'DevOps-Cloud-Node2'
                  /* customWorkspace '/home/jenkins/customworkspace' */
              }
-    }
-    */
+    } */
     triggers {
         cron('* * * H/1 *')
         pollSCM('* * * H/1 *')
@@ -71,8 +70,7 @@ pipeline {
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
-        }
-        */
+        } */
         stage('when Master/Master2 Branch Section') {
             when {
                 beforeAgent true
