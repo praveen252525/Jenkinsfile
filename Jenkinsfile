@@ -10,9 +10,14 @@ pipeline {
                  /* customWorkspace '/home/jenkins/customworkspace' */
              }
     }
+    triggers {
+        cron('* * * * *')
+        pollSCM('* * * H/1 *')
+        /* upstream(upstreamProjects: 'job1,job2', threshold: hudson.model.Result.SUCCESS) */
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2', daysToKeepStr: '2', artifactDaysToKeepStr: '2'))
-        checkoutToSubdirectory('customworkspace')
+        /* checkoutToSubdirectory('customworkspace') */
         disableConcurrentBuilds()
         disableResume()
         overrideIndexTriggers(true)
