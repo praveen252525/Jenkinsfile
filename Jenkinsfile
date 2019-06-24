@@ -7,7 +7,7 @@ pipeline {
     agent {
              node {
                  label 'DevOps-Cloud-Node2'
-                 customWorkspace '/home/jenkins/customworkspace' 
+                 customWorkspace '/home/jenkins/customworkspace'
              }
     }
     options {
@@ -19,7 +19,7 @@ pipeline {
         preserveStashes(buildCount: 2)
         quietPeriod(5)
         retry(2)
-        skipDefaultCheckout(true)
+        skipDefaultCheckout(false)
         skipStagesAfterUnstable()
         timeout(time: 3, unit: 'MINUTES')
         timestamps ()
