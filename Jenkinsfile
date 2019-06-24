@@ -70,6 +70,9 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
+        stage('when Section') {
+        
+        }
     }
     post  {
         always  {
