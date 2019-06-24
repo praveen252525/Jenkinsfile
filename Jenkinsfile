@@ -1,15 +1,16 @@
 pipeline {
     /* insert Declarative Pipeline here */
-    /* agent  {  label  'DevOps-Cloud-Node2'  } */
+    agent  {  label  'DevOps-Cloud-Node2'  }
     /* agent any */
     /* agent none */
     /* agent { node { label 'DevOps-Cloud-Node2' } } */
-    agent {
+    /* agent {
              node {
                  label 'DevOps-Cloud-Node2'
                  /* customWorkspace '/home/jenkins/customworkspace' */
              }
     }
+    */
     triggers {
         cron('* * * H/1 *')
         pollSCM('* * * H/1 *')
@@ -30,7 +31,7 @@ pipeline {
         timestamps ()
         parallelsAlwaysFailFast()
     }
-    parameters {
+    /* parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
         text(name: 'Jenkins', defaultValue: 'Jenkins', description: 'Enter some information about the person')
@@ -43,8 +44,9 @@ pipeline {
 
         file(name: "FILE", description: "Choose a file to upload")
     }
+    */
     stages  {
-        stage('Parameters Section') {
+      /*  stage('Parameters Section') {
             steps {
                 echo "Hello ${params.PERSON}"
 
@@ -70,8 +72,46 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
-        stage('when Section') {
-        
+        */
+        stage('when Master/Master2 Branch Section') {
+            when {
+                beforeAgent true
+                expression { BRANCH_NAME ==~ /(master|master2)/ }
+                anyOf {
+                    environment name: 'DEPLOY_TO', value: 'master'
+                    environment name: 'DEPLOY_TO', value: 'master2'
+                }
+                steps {
+                echo 'Deploying to master OR master2'
+                }
+            }
+        }
+        stage('when Master2 Branch Section') {
+            when {
+                beforeInput true
+                allOf {
+                    branch 'master2'
+                    branch 'master3'
+                }
+                input {
+                message "Deploy to production?"
+                id "simple-input"
+                }
+                steps {
+                    echo 'Deploying to master2 and master3 environments'
+                }
+            }
+        }
+        stage('when other Branch Section') {
+            when {
+                not {
+                    branch 'master1'
+                    branch 'master3'
+                }
+                steps {
+                    echo 'Deploying to other branches'
+                }
+            }
         }
     }
     post  {
