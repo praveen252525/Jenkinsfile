@@ -57,8 +57,6 @@ pipeline {
                 echo "Password: ${params.PASSWORD}"
             }
         }
-    }
-    stages  {
         stage('Input Section') {
             input {
                 message "Should we continue?"
