@@ -69,7 +69,6 @@ pipeline {
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
-        }
             stages {
                 stage('Parallel In Sequential') {
                     parallel {
@@ -86,6 +85,7 @@ pipeline {
                     }
                 }
             }
+        }
     }
     post  {
         always  {
