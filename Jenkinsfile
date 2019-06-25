@@ -84,35 +84,7 @@ pipeline {
                 }
             }
         }
-        stage('when Master2 Branch Section') {
-            when {
-                beforeInput true
-                allOf {
-                    branch 'master2'
-                    branch 'master3'
-                }
-                input {
-                message "Deploy to production?"
-                id "simple-input"
-                }
-                steps {
-                    echo 'Deploying to master2 and master3 environments'
-                }
-            }
-        }
-        stage('when other Branch Section') {
-            when {
-                not {
-                    branch 'master1'
-                    branch 'master3'
-                }
-                steps {
-                    echo 'Deploying to other branches'
-                }
-            }
-        }
-    }
-    post  {
+      post  {
         always  {
             echo 'this  can run always'
         }
