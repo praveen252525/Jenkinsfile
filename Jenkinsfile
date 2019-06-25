@@ -77,7 +77,7 @@ pipeline {
                     when {
                         beforeInput true
                         allOf {
-                            branch 'master2'
+                            branch 'master1'
                         }
                     }
                     input {
@@ -90,7 +90,6 @@ pipeline {
                 }
                 stage('Branch B') {
                     when {
-                        expression { BRANCH_NAME ==~ /(master|master2)/ }
                         anyOf {
                             environment name: 'DEPLOY_TO', value: 'master'
                             environment name: 'DEPLOY_TO', value: 'master2'
