@@ -77,7 +77,7 @@ pipeline {
                     when {
                         beforeInput true
                         allOf {
-                            branch 'master1'
+                            branch 'master'
                         }
                     }
                     input {
@@ -91,7 +91,7 @@ pipeline {
                 stage('Branch B') {
                     when {
                         anyOf {
-                            branch 'master'
+                            branch 'master2'
                         }
                     }
                     steps {
