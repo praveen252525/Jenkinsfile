@@ -70,6 +70,24 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
+        stage('Parallel Stage') {
+            when {
+                branch 'master2'
+            }
+            failFast true
+            parallel {
+                stage('Branch A') {
+                    steps {
+                        echo "On Branch A"
+                    }
+                }
+                stage('Branch B') {
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
+            }
+        }  
     }
     post  {
         always  {
