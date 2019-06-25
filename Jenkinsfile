@@ -9,7 +9,9 @@ pipeline {
                  label 'DevOps-Cloud-Node2'
                  /* customWorkspace '/home/jenkins/customworkspace' */
              }
-    } */
+   // } 
+   */
+
     triggers {
         cron('* * * H/1 *')
         pollSCM('* * * H/1 *')
