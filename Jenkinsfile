@@ -71,8 +71,12 @@ pipeline {
             }
         }
         stage('Parallel Stage') {
-            when {
-                branch 'master2'
+            when { 
+                expression { BRANCH_NAME ==~ /(master|master2)/ }
+                anyOf {
+                    environment name: 'DEPLOY_TO', value: 'master'
+                    environment name: 'DEPLOY_TO', value: 'master2'
+                }
             }
             failFast true
             parallel {
@@ -87,7 +91,7 @@ pipeline {
                     }
                 }
             }
-        }  
+        }
     }
     post  {
         always  {
