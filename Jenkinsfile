@@ -28,7 +28,7 @@ pipeline {
         skipStagesAfterUnstable()
         timeout(time: 3, unit: 'MINUTES')
         timestamps ()
-        parallelsAlwaysFailFast()
+        parallelsAlwaysFailFast(true)
     }
      parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -71,18 +71,21 @@ pipeline {
             }
         }
         stage('Parallel Stage') {
-            when { 
-                expression { BRANCH_NAME ==~ /(master|master2)/ }
-                anyOf {
-                    environment name: 'DEPLOY_TO', value: 'master'
-                    environment name: 'DEPLOY_TO', value: 'master2'
-                }
-            }
             failFast true
             parallel {
                 stage('Branch A') {
+                    when {
+                        beforeInput true
+                        allOf {
+                            branch 'master2'
+                        }
+                    }
+                    input {
+                    message "Deploy to production?"
+                    id "simple-input"
+                    }
                     steps {
-                        echo "On Branch A"
+                        echo 'Deploying to master2 and master3 environments'
                     }
                 }
                 stage('Branch B') {
