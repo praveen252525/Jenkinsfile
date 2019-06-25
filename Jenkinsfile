@@ -70,7 +70,7 @@ pipeline {
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
-        } */
+     //  }
         stage('when Master/Master2 Branch Section') {
             when {
                 beforeAgent true
