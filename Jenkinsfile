@@ -76,8 +76,6 @@ pipeline {
                     }
                 }
                 stage('Parallel In Sequential') {
-                    beforeAgent true
-                    failFast true
                     parallel {
                         stage('Branch master and master2') {
                             when {
@@ -87,7 +85,6 @@ pipeline {
                                     environment name: 'DEPLOY_TO', value: 'master2'
                                 }
                             }
-                            agent  {  label  'DevOps-Cloud-Node1'  }
                             steps {
                                 echo 'Deploying to master OR master2'
                             }
