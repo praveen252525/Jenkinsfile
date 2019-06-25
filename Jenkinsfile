@@ -9,10 +9,8 @@ pipeline {
                  label 'DevOps-Cloud-Node2'
                  /* customWorkspace '/home/jenkins/customworkspace' */
              }
-   // } 
-   */
-
-    triggers {
+   // }
+   triggers {
         cron('* * * H/1 *')
         pollSCM('* * * H/1 *')
         /* upstream(upstreamProjects: 'job1,job2', threshold: hudson.model.Result.SUCCESS) */
