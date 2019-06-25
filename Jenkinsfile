@@ -91,8 +91,7 @@ pipeline {
                 stage('Branch B') {
                     when {
                         anyOf {
-                            environment name: 'DEPLOY_TO', value: 'master'
-                            environment name: 'DEPLOY_TO', value: 'master2'
+                            branch 'master'
                         }
                     }
                     steps {
