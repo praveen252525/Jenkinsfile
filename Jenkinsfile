@@ -71,16 +71,37 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
-        stage('when Master/Master2 Branch Section') {
-            when {
-                beforeAgent true
-                expression { BRANCH_NAME ==~ /(master|master2)/ }
-                anyOf {
-                    environment name: 'DEPLOY_TO', value: 'master'
-                    environment name: 'DEPLOY_TO', value: 'master2'
+        stage('Parallel Stage Section') {
+            beforeAgent true
+            failFast true
+            parallel {
+            stage('Branch A') {
+                when {
+                    expression { BRANCH_NAME ==~ /(master|master2)/ }
+                    anyOf {
+                        environment name: 'DEPLOY_TO', value: 'master'
+                        environment name: 'DEPLOY_TO', value: 'master2'
+                    }
                 }
+                agent  {  label  'DevOps-Cloud-Node1'  }
                 steps {
-                echo 'Deploying to master OR master2'
+                    echo 'Deploying to master OR master2'
+                }
+            }
+            stage('when Master2 Branch Section') {
+                when {
+                    beforeInput true
+                    allOf {
+                        branch 'master2'
+                        branch 'master3'
+                    }
+                    input {
+                    message "Deploy to production?"
+                    id "simple-input"
+                    }
+                    steps {
+                        echo 'Deploying to master2 and master3 environments'
+                    }
                 }
             }
         }
