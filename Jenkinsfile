@@ -1,15 +1,15 @@
 pipeline {
     /* insert Declarative Pipeline here */
-    agent  {  label  'DevOps-Cloud-Node2'  }
+    // agent  {  label  'DevOps-Cloud-Node2'  }
     /* agent any */
     /* agent none */
     /* agent { node { label 'DevOps-Cloud-Node2' } } */
-    /* agent {
-             node {
-                 label 'DevOps-Cloud-Node2'
-                 /* customWorkspace '/home/jenkins/customworkspace' */
-             }
-   // }
+    agent {
+        node {
+            label 'DevOps-Cloud-Node2'
+            /* customWorkspace '/home/jenkins/customworkspace' */
+        }
+    }
    triggers {
         cron('* * * H/1 *')
         pollSCM('* * * H/1 *')
@@ -30,7 +30,7 @@ pipeline {
         timestamps ()
         parallelsAlwaysFailFast()
     }
-    /* parameters {
+     parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
         text(name: 'Jenkins', defaultValue: 'Jenkins', description: 'Enter some information about the person')
@@ -43,9 +43,9 @@ pipeline {
 
         file(name: "FILE", description: "Choose a file to upload")
     }
-    */
+
     stages  {
-      /*  stage('Parameters Section') {
+        stage('Parameters Section') {
             steps {
                 echo "Hello ${params.PERSON}"
 
@@ -70,7 +70,7 @@ pipeline {
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
-     //  }
+       }
         stage('when Master/Master2 Branch Section') {
             when {
                 beforeAgent true
