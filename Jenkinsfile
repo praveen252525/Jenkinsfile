@@ -44,7 +44,7 @@ pipeline {
         file(name: "FILE", description: "Choose a file to upload")
     }
     stages  {
-        stage('Sequential Parameter Section') {
+        stage('Parameters Section') {
             steps {
                 echo "Hello ${params.PERSON}"
 
@@ -56,59 +56,36 @@ pipeline {
 
                 echo "Password: ${params.PASSWORD}"
             }
+        }
+        stage('Input Section') {
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "alice,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
+            steps {
+                echo "Hello, ${PERSON}, nice to meet you."
+            }
+        }
             stages {
-                stage('Input Section') {
-                    input {
-                        message "Should we continue?"
-                        ok "Yes, we should."
-                        submitter "alice,bob"
-                        parameters {
-                            string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                        }
-                    }
-                    steps {
-                        echo "Hello, ${PERSON}, nice to meet you."
-                    }
-                }
-                stage('In Sequential 2') {
-                    steps {
-                        echo "In Sequential 2"
-                    }
-                }
                 stage('Parallel In Sequential') {
                     parallel {
-                        stage('Branch master and master2') {
-                            when {
-                                expression { BRANCH_NAME ==~ /(master|master2)/ }
-                                anyOf {
-                                    environment name: 'DEPLOY_TO', value: 'master'
-                                    environment name: 'DEPLOY_TO', value: 'master2'
-                                }
-                            }
+                        stage('In Parallel 1') {
                             steps {
-                                echo 'Deploying to master OR master2'
+                                echo "In Parallel 1"
                             }
-                         }
-                         stage('when Master2 Branch Section') {
-                             when {
-                                 beforeInput true
-                                 allOf {
-                                     branch 'master2'
-                                     branch 'master3'
-                                 }
-                                 input {
-                                 message "Deploy to production?"
-                                 id "simple-input"
-                                 }
-                                 steps {
-                                     echo 'Deploying to master2 and master3 environments'
-                                 }
-                             }
-                         }
+                        }
+                        stage('In Parallel 2') {
+                            steps {
+                                echo "In Parallel 2"
+                            }
+                        }
                     }
                 }
             }
-        }
     }
     post  {
         always  {
