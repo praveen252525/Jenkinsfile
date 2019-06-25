@@ -28,7 +28,7 @@ pipeline {
         skipStagesAfterUnstable()
         timeout(time: 3, unit: 'MINUTES')
         timestamps ()
-        parallelsAlwaysFailFast(true)
+        parallelsAlwaysFailFast()
     }
      parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -85,10 +85,17 @@ pipeline {
                     id "simple-input"
                     }
                     steps {
-                        echo 'Deploying to master2 and master3 environments'
+                        echo 'Deploying to master2 environments'
                     }
                 }
                 stage('Branch B') {
+                    when {
+                        expression { BRANCH_NAME ==~ /(master|master2)/ }
+                        anyOf {
+                            environment name: 'DEPLOY_TO', value: 'master'
+                            environment name: 'DEPLOY_TO', value: 'master2'
+                        }
+                    }
                     steps {
                         echo "On Branch B"
                     }
