@@ -92,10 +92,32 @@ pipeline {
                     when {
                         anyOf {
                             branch 'master2'
+                            buildingTag()
+                            changelog '.*^\\[DEPENDENCY\\] .+$'
+                            changeset glob: "ReadMe.*", caseSensitive: true
+                            changeRequest target: 'master2'
+                            environment name: 'DEPLOY_TO', value: 'production'
+                            equals expected: 2, actual: currentBuild.number
+                            expression { return params.DEBUG_BUILD }
+                            tag "release-*"
+                            triggeredBy 'SCMTrigger'
+                            triggeredBy 'TimerTrigger'
+                            triggeredBy 'UpstreamCause'
+                            triggeredBy cause: "UserIdCause", detail: "vlinde"
                         }
                     }
                     steps {
                         echo "On Branch B"
+                    }
+                }
+                stage('Branch c') {
+                    when {
+                        not {
+                            branch 'master1'
+                        }
+                    }
+                    steps {
+                        echo "On Branch c"
                     }
                 }
             }
