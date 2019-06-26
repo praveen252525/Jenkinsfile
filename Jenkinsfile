@@ -143,14 +143,14 @@ pipeline {
                             try {
                                 currentBuild.result = "SUCCESS"
                             }
-                            //catch (caughtError) { //End of Try err = caughtError
-                            //    currentBuild.result = "FAILURE"
-                            //}
-                            finally {
-                                (currentBuild.result != "ABORTED") && (currentBuild.result != "SUCCESS") && (currentBuild.result != "FAILURE")  {
-                                    echo "Undefined output in finally Section"
-                                }
+                            catch (caughtError) { //End of Try err = caughtError
+                                currentBuild.result = "FAILURE"
                             }
+                            //finally {
+                            //    (currentBuild.result != "ABORTED") && (currentBuild.result != "SUCCESS") && (currentBuild.result != "FAILURE")  {
+                            //        echo "Undefined output in finally Section"
+                            //    }
+                          //  }
                         }
                     }
                 }
