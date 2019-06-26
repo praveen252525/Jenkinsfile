@@ -122,7 +122,7 @@ pipeline {
                         echo "On Branch B"
                     }
                 }
-                stage('Branch c') {
+                stage('def and for block') {
                     when {
                         not {
                             branch 'master1'
@@ -134,6 +134,19 @@ pipeline {
                             for (int i = 0; i < browsers.size(); ++i) {
                                 echo "Testing the ${browsers[i]} browser"
                             }
+                        }
+                    }
+                }
+                Stage('Try-catch-Finally Block') {
+                    try {
+                        currentBuild.result = "SUCCESS"
+                    }
+                    catch (caughtError) { //End of Try err = caughtError
+                        currentBuild.result = "FAILURE"
+                    }
+                    finally {
+                        (currentBuild.result != "ABORTED") && (currentBuild.result != "SUCCESS") && (currentBuild.result != "FAILURE")  {
+                            echo "Undefined output in finally Section"
                         }
                     }
                 }
