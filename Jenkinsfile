@@ -138,15 +138,19 @@ pipeline {
                     }
                 }
                 Stage('Try-catch-Finally Block') {
-                    try {
-                        currentBuild.result = "SUCCESS"
-                    }
-                    catch (caughtError) { //End of Try err = caughtError
-                        currentBuild.result = "FAILURE"
-                    }
-                    finally {
-                        (currentBuild.result != "ABORTED") && (currentBuild.result != "SUCCESS") && (currentBuild.result != "FAILURE")  {
-                            echo "Undefined output in finally Section"
+                    steps {
+                        script {
+                            try {
+                                currentBuild.result = "SUCCESS"
+                            }
+                            catch (caughtError) { //End of Try err = caughtError
+                                currentBuild.result = "FAILURE"
+                            }
+                            finally {
+                                (currentBuild.result != "ABORTED") && (currentBuild.result != "SUCCESS") && (currentBuild.result != "FAILURE")  {
+                                    echo "Undefined output in finally Section"
+                                }    
+                            }
                         }
                     }
                 }
