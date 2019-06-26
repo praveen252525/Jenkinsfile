@@ -141,7 +141,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                currentBuild.result = "SUCCESS"
+                                echo "Try section"
                             }
                             catch (caughtError) { //End of Try err = caughtError
                                 currentBuild.result = "FAILURE"
