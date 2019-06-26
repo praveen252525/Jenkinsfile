@@ -71,11 +71,15 @@ pipeline {
             }
         }
         stage('If-Else Block') {
-            if (env.BRANCH_NAME == 'master') {
-                echo 'I only execute if block'
-            }
-            else {
-                echo 'I execute elsewhere block'
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'master2') {
+                        echo 'I only execute if block'
+                    }
+                    else {
+                        echo 'I execute elsewhere block'
+                    }
+                }
             }
         }
         stage('Parallel Stage') {
