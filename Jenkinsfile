@@ -141,9 +141,9 @@ pipeline {
                     steps {
                         script {
                             try {
-                                echo "Try section"
+                                sh "mvn --version"
                             }
-                            catch (caughtError) { //End of Try err = caughtError
+                            catch (Exception e) { 
                                 currentBuild.result = "FAILURE"
                             }
                             //finally {
