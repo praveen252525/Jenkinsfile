@@ -70,6 +70,14 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
+        stage('If-Else Block') {
+            if (env.BRANCH_NAME == 'master') {
+                echo 'I only execute if block'
+            }
+            else {
+                echo 'I execute elsewhere block'
+            }
+        }
         stage('Parallel Stage') {
             failFast true
             parallel {
@@ -117,7 +125,12 @@ pipeline {
                         }
                     }
                     steps {
-                        echo "On Branch c"
+                        script {
+                            def browsers = ['chrome', 'firefox']
+                            for (int i = 0; i < browsers.size(); ++i) {
+                                echo "Testing the ${browsers[i]} browser"
+                            }
+                        }
                     }
                 }
             }
